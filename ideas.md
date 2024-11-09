@@ -5,4 +5,4 @@
 | { | begin |
 | } | end |
 | public ClassName() | + constructor ClassName() |
-| this.field = parameter | ClassName.field = parameter
+| this.field = value | ClassName.field = value |
