@@ -4,4 +4,4 @@
 | private | - |
 | { | begin |
 | } | end |
-| public ClassName | + constructor className |
+| public ClassName() | + constructor ClassName() |
