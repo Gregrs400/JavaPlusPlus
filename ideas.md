@@ -46,4 +46,6 @@
 - keyboard user input support?
 - "in" keyword
   - native search function 
-- 
+- scoping
+  - mimics Java
+- call-by-value 
