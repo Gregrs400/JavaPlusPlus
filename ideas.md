@@ -39,7 +39,7 @@
 - memory management
   - garbage collector
 - concurrency
-  - mimics Java
+  - mimicks Java
 - readability over performance
 - similar to Java
 - using Java Virtual Machine for compiling language
@@ -47,5 +47,5 @@
 - "in" keyword
   - native search function 
 - scoping
-  - mimics Java
+  - mimicks Java
 - call-by-value 
