@@ -8,6 +8,7 @@
 | } | end |
 | public ClassName() | + constructor ClassName() |
 | this.field = value | ClassName.field = value |
+| if(x == 9) | if(x is 9) |
 
 ## Primitive Functions
 
@@ -39,3 +40,10 @@
   - garbage collector
 - concurrency
   - mimics Java
+- readability over performance
+- similar to Java
+- using Java Virtual Machine for compiling language
+- keyboard user input support?
+- "in" keyword
+  - native search function 
+- 
