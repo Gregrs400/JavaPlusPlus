@@ -1,0 +1,9 @@
+This folder contains code from a homework assignment that involved building a basic tokenizer.
+# Explanation
+## TokenType Class
+There's a TokenType class that identifies which kind of arithmetic operator is being used. The TokenType constructor takes in a character and a string. The character is used to identify which arithmetic operator is being used (+, -, *, /, %, =) and the string classifies the arithmetic operator as being a token that is an operator. This code example can identify reserved words, arithmetic operators, data types, integer literals, string literals, and valid variable names.
+
+## Lexer Class
+Then there is a Lexer class that creates three separate hashmaps used to store the reserved words identified, the operators identified, and the data types identified. The Lexer class takes in a string as input, and the string is meant to be an example program in Java++. Example of a string could be "for int i = 0", which would identify "for" as a reserved word, "int" as a data type, "=" as an operator, and "0" as an integer literal.
+
+The Lexer class has a single function named readInput. It reads in the string input passed to the Lexer class, uses a for loop to go through each character within the string, and then uses an if statement to identify if the current character within the string is contained in one of the three hashmaps. In other words, the if statement checks if the character is within the reservedWords hashmap, in the operators hahsmap, or in the dataTypes hashmap. If the character is within one of those hashmaps, the program will print the current character followed by the character's type (either a reserved word, an operator, or a data type). Additionally, within the if statement are conditions to check if the character is an integer literal, a string literal, or a valid variable name. If all if statements fail, the default output is the current character followed by "unknown token."
