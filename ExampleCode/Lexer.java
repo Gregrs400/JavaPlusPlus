@@ -1,17 +1,17 @@
 import java.util.HashMap;
 
-class TokenType {
+class TokenizerTokenType {
     protected char currentChar;
     protected String tokenType;
 
-    public TokenType(char currentChar, String tokenType){
+    public TokenizerTokenType(char currentChar, String tokenType){
         this.currentChar = currentChar;
         this.tokenType = tokenType;
     }
 }
 public class Lexer {
     private final HashMap<String, String> reservedWords = new HashMap<String, String>();
-    private final HashMap<Character, TokenType> operators = new HashMap<Character, TokenType>();
+    private final HashMap<Character, TokenizerTokenType> operators = new HashMap<Character, TokenizerTokenType>();
     private final HashMap<String, String> dataTypes = new HashMap<String, String>();
     /* These variables are currently not used.
     //private int position;
@@ -32,12 +32,12 @@ public class Lexer {
         reservedWords.put("public", "reserved word");
         reservedWords.put("private", "reserved word");
         // Operators
-        operators.put('+', new TokenType('+', "operator"));
-        operators.put('-', new TokenType('-', "operator"));
-        operators.put('*', new TokenType('*', "operator"));
-        operators.put('/', new TokenType('/', "operator"));
-        operators.put('%', new TokenType('%', "operator"));
-        operators.put('=', new TokenType('=', "operator"));
+        operators.put('+', new TokenizerTokenType('+', "operator"));
+        operators.put('-', new TokenizerTokenType('-', "operator"));
+        operators.put('*', new TokenizerTokenType('*', "operator"));
+        operators.put('/', new TokenizerTokenType('/', "operator"));
+        operators.put('%', new TokenizerTokenType('%', "operator"));
+        operators.put('=', new TokenizerTokenType('=', "operator"));
         // Data Types
         dataTypes.put("int", "data type");
         dataTypes.put("str", "data type");
