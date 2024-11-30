@@ -1,15 +1,29 @@
 import java.io.*;
 import java.util.*;
 
+
+
 // Token types
 enum TokenType {
-    Literal,
+    NumericLiteral,
+    StringLiteral,
     Operator,
     Variable,
     ReservedWord,
     DataType,
+    Punctuation,
     Unknown
 }
+
+
+////something to hold string literals because strings can be a lot of things
+//class sL{
+//    char val;
+//
+//    sL(char val){
+//        this.val = val;
+//    }
+//}
 
 // Token class
 class Token {
@@ -33,11 +47,17 @@ public class JavaPlusPlusTokenizer {
     //Define reserved words and data types
     private static final Set<String> reservedWords = new HashSet<>(Arrays.asList(
             "if", "elif", "else", "for", "while", "return", "func", "def", "is", "in",
-            "static", "void", "class", "begin", "end"));
+            "static", "void", "class", "begin", "end", "println"
+    ));
     private static final Set<String> dataTypes = new HashSet<>(Arrays.asList(
-            "int", "char", "String", "bool", "float", "double"));
+            "int", "char", "String", "bool", "float", "double"
+    ));
     private static final Set<String> operators = new HashSet<>(Arrays.asList(
-            "+", "-", "*", "/", "=", "%", "<", "<=", ">", ">=" , "is"));
+            "+", "-", "*", "/", "=", "%", "<", "<=", ">", ">=" , "is"
+    ));
+    private static final Set<String> punctuation = new HashSet<>(Arrays.asList(
+            "(", ")", "[", "]", "{", "}", ";", ","
+    ));
 
     // Categorize tokens based on value
     private static TokenType categorizeToken(String token) {
@@ -50,11 +70,17 @@ public class JavaPlusPlusTokenizer {
         if (operators.contains(token)) {
             return TokenType.Operator;
         }
+        if (punctuation.contains(token)){
+            return TokenType.Punctuation;
+        }
         if (Character.isDigit(token.charAt(0))) {
-            return TokenType.Literal;
+            return TokenType.NumericLiteral;
         }
         if (Character.isAlphabetic(token.charAt(0))) {
             return TokenType.Variable;
+        }
+        if (token.charAt(0) == '\"'){
+            return  TokenType.StringLiteral;
         }
         return TokenType.Unknown;
     }
@@ -63,17 +89,39 @@ public class JavaPlusPlusTokenizer {
     private static List<Token> tokenize(String input) {
         List<Token> tokens = new ArrayList<>();
         StringBuilder currentToken = new StringBuilder();
+        boolean stringflag = false;
 
         for (char ch : input.toCharArray()) {
-            if (Character.isWhitespace(ch)) {
+            //exception must be made when " appears in code. It will create a string literal
+
+            if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringflag)) {
+
+                // Many times punctuation will be found touching char, this will
+                // record punctuation while the token is being scanned
+                tokens.add(new Token(String.valueOf(ch), categorizeToken(String.valueOf(ch))));
+
                 if (!currentToken.isEmpty()) {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
                     currentToken.setLength(0);
                 }
                 continue;
             }
-            if (Character.isAlphabetic(ch) || Character.isDigit(ch)) {
+
+            // crude way of doing this but ill explain
+            if(ch == '\"' && !stringflag) {  // a flag is used to see if we are in a "string"
                 currentToken.append(ch);
+                stringflag = true;           // once we enter a "string" we set the flag to true
+
+            }else if(ch == '\"') {           // finding another quotation means we exit the "string"
+                currentToken.append(ch);
+                stringflag = false;
+
+            }else if(stringflag) {          // we keep appending all chars while the flag is true
+                currentToken.append(ch);
+
+            } else if ((Character.isLetterOrDigit(ch) || operators.contains(String.valueOf(ch)))) {
+                currentToken.append(ch);
+
             } else {
                 if (!currentToken.isEmpty()) {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
@@ -95,9 +143,11 @@ public class JavaPlusPlusTokenizer {
             categorizedTokens.computeIfAbsent(token.type, k -> new ArrayList<>()).add(token.value);
         }
 
-        System.out.println("Literals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Literal, Collections.emptyList())));
+        System.out.println("NumericLiterals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.NumericLiteral, Collections.emptyList())));
+        System.out.println("StringLiterals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.StringLiteral, Collections.emptyList())));
         System.out.println("Operators: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Operator, Collections.emptyList())));
         System.out.println("Variables: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Variable, Collections.emptyList())));
+        System.out.println("Punctuation: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Punctuation, Collections.emptyList())));
         System.out.println("Reserved Words: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.ReservedWord, Collections.emptyList())));
         System.out.println("Data Types: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.DataType, Collections.emptyList())));
         System.out.println("Unknown: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Unknown, Collections.emptyList())));
