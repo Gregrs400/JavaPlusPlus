@@ -45,22 +45,22 @@ public class JavaPlusPlusTokenizer {
     // and other possible additions to reserved Words (static, void, class)
 
     //Define reserved words and data types
-    private static final Set<String> reservedWords = new HashSet<>(Arrays.asList(
+    private final Set<String> reservedWords = new HashSet<>(Arrays.asList(
             "if", "elif", "else", "for", "while", "return", "func", "def", "is", "in",
             "static", "void", "class", "begin", "end", "println"
     ));
-    private static final Set<String> dataTypes = new HashSet<>(Arrays.asList(
+    private final Set<String> dataTypes = new HashSet<>(Arrays.asList(
             "int", "char", "String", "bool", "float", "double"
     ));
-    private static final Set<String> operators = new HashSet<>(Arrays.asList(
+    private final Set<String> operators = new HashSet<>(Arrays.asList(
             "+", "-", "*", "/", "=", "%", "<", "<=", ">", ">=" , "is"
     ));
-    private static final Set<String> punctuation = new HashSet<>(Arrays.asList(
+    private final Set<String> punctuation = new HashSet<>(Arrays.asList(
             "(", ")", "[", "]", "{", "}", ";", ","
     ));
 
     // Categorize tokens based on value
-    public static TokenType categorizeToken(String token) {
+    public TokenType categorizeToken(String token) {
         if (dataTypes.contains(token)) {
             return TokenType.DataType;
         }
@@ -86,7 +86,7 @@ public class JavaPlusPlusTokenizer {
     }
 
     // Tokenize the input string into tokens
-    public static List<Token> tokenize(String input) {
+    public List<Token> tokenize(String input) {
         List<Token> tokens = new ArrayList<>();
         StringBuilder currentToken = new StringBuilder();
         boolean stringflag = false;
@@ -136,7 +136,7 @@ public class JavaPlusPlusTokenizer {
     }
 
     // Function to print categorized tokens
-    public static void printReport(List<Token> tokens) {
+    public void printReport(List<Token> tokens) {
         Map<TokenType, List<String>> categorizedTokens = new HashMap<>();
 
         for (Token token : tokens) {
@@ -154,7 +154,7 @@ public class JavaPlusPlusTokenizer {
     }
 
 
-    public static StringBuilder readFile(String filePath) {
+    public StringBuilder readFile(String filePath) {
         File inputFile = new File(filePath);
         StringBuilder input = new StringBuilder();
         int lineCount = 0;
