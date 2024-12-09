@@ -86,8 +86,6 @@ public class IDE implements ActionListener
         if (e.getSource() == loadItem)
         {
 
-            System.out.println("load file");
-
             JFileChooser fileChooser = new JFileChooser();
 
             fileChooser.setCurrentDirectory(new File("."));
@@ -105,8 +103,6 @@ public class IDE implements ActionListener
         }
         else if (e.getSource() == saveItem)
         {
-
-            System.out.println("save file");
 
             JFileChooser fileChooser = new JFileChooser();
 
