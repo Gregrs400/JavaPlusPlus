@@ -13,6 +13,7 @@ enum TokenType {
     ReservedWord,
     DataType,
     Punctuation,
+    Whitespace,
     Unknown
 }
 
@@ -34,6 +35,11 @@ class Token {
     Token(String value, TokenType type) {
         this.value = value;
         this.type = type;
+    }
+
+    public String toString()
+    {
+        return "[" + this.value + ", " + this.type + "]";
     }
 }
 
@@ -87,6 +93,10 @@ public class JavaPlusPlusTokenizer {
         if (token.charAt(0) == '\"'){
             return  TokenType.StringLiteral;
         }
+        if (token.charAt(0) == ' ')
+        {
+            return TokenType.Whitespace;
+        }
         return TokenType.Unknown;
     }
 
@@ -99,11 +109,14 @@ public class JavaPlusPlusTokenizer {
         for (char ch : input.toCharArray()) {
             //exception must be made when " appears in code. It will create a string literal
 
-            if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringflag)) {
+            if (((Character.isWhitespace(ch)))) //|| punctuation.contains(String.valueOf(ch))) && !stringflag))
+            {
 
                 // Many times punctuation will be found touching char, this will
                 // record punctuation while the token is being scanned
-                tokens.add(new Token(String.valueOf(ch), categorizeToken(String.valueOf(ch))));
+                tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                currentToken.setLength(0);
+                currentToken.append(' ');
 
                 if (!currentToken.isEmpty()) {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
