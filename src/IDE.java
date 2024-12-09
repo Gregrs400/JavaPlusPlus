@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class IDE implements ActionListener
 {
@@ -80,7 +81,14 @@ public class IDE implements ActionListener
 
         if (e.getSource() == loadItem)
         {
+
             System.out.println("load file");
+
+            JFileChooser fileChooser = new JFileChooser();
+
+            fileChooser.setCurrentDirectory(new File("."));
+            fileChooser.showOpenDialog(null);
+
         }
         else if (e.getSource() == saveItem)
         {
