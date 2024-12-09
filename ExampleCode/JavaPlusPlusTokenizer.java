@@ -157,7 +157,6 @@ public class JavaPlusPlusTokenizer {
     public StringBuilder readFile(String filePath) {
         File inputFile = new File(filePath);
         StringBuilder input = new StringBuilder();
-        int lineCount = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             String line;
@@ -168,7 +167,6 @@ public class JavaPlusPlusTokenizer {
                     continue;
                 }
                 input.append(line).append(" ");
-                lineCount++;
             }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
