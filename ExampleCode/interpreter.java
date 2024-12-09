@@ -107,14 +107,14 @@ public class interpreter {
         javaPlusPlusToJava.put("switch", "switch");
         //Arithmetic
         javaPlusPlusToJava.put("+", "+");
-        javaPlusPlusToJava.put("-", "-"); //Not sure how to make this work
+        javaPlusPlusToJava.put("-", "-");
         javaPlusPlusToJava.put("*", "*");
         javaPlusPlusToJava.put("/", "/");
         javaPlusPlusToJava.put("%", "%");
         javaPlusPlusToJava.put("=", "=");
         // Comparative
         javaPlusPlusToJava.put("is", "==");
-        javaPlusPlusToJava.put("<", "<"); // Not sure how to make this work
+        javaPlusPlusToJava.put("<", "<");
         javaPlusPlusToJava.put("<=", "<=");
         javaPlusPlusToJava.put(">", ">");
         javaPlusPlusToJava.put(">=", ">=");
