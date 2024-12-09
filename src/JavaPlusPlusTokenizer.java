@@ -158,7 +158,7 @@ public class JavaPlusPlusTokenizer {
 
     public static void main(String[] args){
 
-        File inputFile = new File("C:\\Users\\mrami\\IdeaProjects\\JavaPlusPlusTokenizer_atmp1\\src\\MangoCode.txt");
+        File inputFile = new File("src\\ExampleCode\\MangoCode.txt");
 
         if (!inputFile.exists()) {
             System.err.println("Error: Could not open the file!");
