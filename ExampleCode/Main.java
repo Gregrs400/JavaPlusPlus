@@ -11,5 +11,8 @@ public class Main {
         input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
         List<Token> tokens = tokenizer.tokenize(input.toString());
         tokenizer.printReport(tokens);
+        for (Token token : tokens) {
+            System.out.println(token.toString());
+        }
     }
 }
