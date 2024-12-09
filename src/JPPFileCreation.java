@@ -35,8 +35,10 @@ public class JPPFileCreation
         }
 
     }
-    public void readFromFile(File file)
+    public String readFromFile(File file)
     {
+
+        StringBuilder fileString = new StringBuilder();
 
         try
         {
@@ -46,9 +48,12 @@ public class JPPFileCreation
             while (fileReader.hasNextLine())
             {
 
-                System.out.println(fileReader.nextLine());
+                fileString.append(fileReader.nextLine());
+                fileString.append(System.getProperty("line.separator"));
 
             }
+
+            return fileString.toString();
 
         }
         catch (FileNotFoundException e)
@@ -57,6 +62,8 @@ public class JPPFileCreation
             e.printStackTrace();
 
         }
+
+        return null;
 
     }
 
