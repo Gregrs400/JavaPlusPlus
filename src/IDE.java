@@ -1,2 +1,6 @@
-public class IDE {
+import javax.swing.*;
+
+public class IDE
+{
+
 }
