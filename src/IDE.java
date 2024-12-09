@@ -12,10 +12,16 @@ public class IDE
         mainFrame.setLayout(null);
 
         JTextArea refactoringArea = new JTextArea();
-        refactoringArea.setBounds(100, 100, 1200, 500);
+        refactoringArea.setBounds(100, 100, 1200, 450);
         refactoringArea.setVisible(true);
 
         mainFrame.add(refactoringArea);
+
+        JTextArea outputArea = new JTextArea();
+        outputArea.setBounds(100, 650, 1200, 250);
+        outputArea.setVisible(true);
+
+        mainFrame.add(outputArea);
 
         mainFrame.setSize(1400, 1000);
         mainFrame.setLocation(100, 25);
