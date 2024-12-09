@@ -81,6 +81,8 @@ public class IDE implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
 
+        jpp = new JPPFileCreation();
+
         if (e.getSource() == loadItem)
         {
 
@@ -89,13 +91,20 @@ public class IDE implements ActionListener
             JFileChooser fileChooser = new JFileChooser();
 
             fileChooser.setCurrentDirectory(new File("."));
-            fileChooser.showOpenDialog(null);
+            int response = fileChooser.showOpenDialog(null);
+
+            if (response == JFileChooser.APPROVE_OPTION)
+            {
+
+                File file = jpp.createOrAccessFile(fileChooser.getSelectedFile().getPath());
+                String fileText = jpp.readFromFile(file);
+                refactoringArea.setText(fileText);
+
+            }
 
         }
         else if (e.getSource() == saveItem)
         {
-
-            jpp = new JPPFileCreation();
 
             System.out.println("save file");
 
@@ -110,6 +119,7 @@ public class IDE implements ActionListener
                 String refactoringAreaText = refactoringArea.getText();
 
                 File file = jpp.createOrAccessFile(fileChooser.getSelectedFile().getPath());
+                jpp.clearFile(file);
                 jpp.writeToFile(file, refactoringAreaText);
 
             }
