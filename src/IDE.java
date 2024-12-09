@@ -10,6 +10,8 @@ public class IDE implements ActionListener
     JMenuItem loadItem;
     JMenuItem saveItem;
     JFrame mainFrame;
+    JTextArea refactoringArea;
+    JPPFileCreation jpp;
 
     public void initIDE()
     {
@@ -21,7 +23,7 @@ public class IDE implements ActionListener
         mainFrame.setSize(1400, 1000);
         mainFrame.setLocation(100, 25);
 
-        JTextArea refactoringArea = new JTextArea();
+        refactoringArea = new JTextArea();
         JScrollPane refactoringAreaScroll = new JScrollPane(refactoringArea);
 
         JPanel refactoringAreaPanel = new JPanel();
@@ -93,17 +95,31 @@ public class IDE implements ActionListener
         else if (e.getSource() == saveItem)
         {
 
+            jpp = new JPPFileCreation();
+
             System.out.println("save file");
 
             JFileChooser fileChooser = new JFileChooser();
 
             fileChooser.setCurrentDirectory(new File("."));
-            fileChooser.showSaveDialog(null);
+            int response = fileChooser.showSaveDialog(null);
+
+            if (response == JFileChooser.APPROVE_OPTION)
+            {
+
+                String refactoringAreaText = refactoringArea.getText();
+
+                File file = jpp.createOrAccessFile(fileChooser.getSelectedFile().getPath());
+                jpp.writeToFile(file, refactoringAreaText);
+
+            }
 
         }
         else
         {
+
             System.out.println("error");
+
         }
 
     }
