@@ -34,7 +34,7 @@ public class IDE implements ActionListener
         mainFrame.add(refactoringAreaPanel);
 
         JTextArea outputArea = new JTextArea();
-        outputArea.setEditable(false);
+        outputArea.setFocusable(false);
         JScrollPane outputAreaScroll = new JScrollPane(outputArea);
 
         JPanel outputAreaPanel = new JPanel();
