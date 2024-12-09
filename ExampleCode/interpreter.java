@@ -62,159 +62,124 @@ public class interpreter {
             "synchronized", "throw", "throws", "transient", "try", "var", "void",
             "volatile", "while"};
 
-        HashMap<String, String> javaPlusPlusToJava = new HashMap<>();
-        javaPlusPlusToJava.put("abstract", "abstract");
-        javaPlusPlusToJava.put("Array", "Array");
-        javaPlusPlusToJava.put("assert", "assert");
-        javaPlusPlusToJava.put("bool", "boolean");
-        javaPlusPlusToJava.put("break", "break");
-        javaPlusPlusToJava.put("byte", "byte");
-        javaPlusPlusToJava.put("case", "case");
-        javaPlusPlusToJava.put("catch", "catch");
-        javaPlusPlusToJava.put("Class", "Class");
-        javaPlusPlusToJava.put("continue", "continue");
-        javaPlusPlusToJava.put("default", "default");
-        javaPlusPlusToJava.put("do", "do");
-        javaPlusPlusToJava.put("double", "double");
-        javaPlusPlusToJava.put("elif", "else if");
-        javaPlusPlusToJava.put("else", "else");
-        javaPlusPlusToJava.put("enum", "enum");
-        javaPlusPlusToJava.put("extends", "extends");
-        javaPlusPlusToJava.put("final", "final");
-        javaPlusPlusToJava.put("finally", "finally");
-        javaPlusPlusToJava.put("float", "float");
-        javaPlusPlusToJava.put("for", "for");
-        javaPlusPlusToJava.put("if", "if");
-        javaPlusPlusToJava.put("in", " "); // Not sure how to make this work
-        javaPlusPlusToJava.put("int", "int");
-        javaPlusPlusToJava.put("implements", "implements");
-        javaPlusPlusToJava.put("import", "import");
-        javaPlusPlusToJava.put("instanceof", "instanceof");
-        javaPlusPlusToJava.put("Interface", "Interface");
-        javaPlusPlusToJava.put("long", "long");
-        javaPlusPlusToJava.put("native", "native");
-        javaPlusPlusToJava.put("new", "new");
-        javaPlusPlusToJava.put("package", "package");
-        javaPlusPlusToJava.put("println", "System.out.println");
-        javaPlusPlusToJava.put("-", "private");
-        javaPlusPlusToJava.put("#", "protected");
-        javaPlusPlusToJava.put("+", "public");
-        javaPlusPlusToJava.put("return", "return");
-        javaPlusPlusToJava.put("short", "short");
-        javaPlusPlusToJava.put("static", "static");
-        javaPlusPlusToJava.put("stictfp", "strictfp");
-        javaPlusPlusToJava.put("super", "super");
-        javaPlusPlusToJava.put("switch", "switch");
+        HashMap<String, String> keywords = new HashMap<>();
+        HashMap<String, String> dataTypes = new HashMap<>();
+        HashMap<String, String> arithmeticOperators = new HashMap<>();
+        HashMap<String, String> comparativeOperators = new HashMap<>();
+        HashMap<String, String> accessSpecifiers = new HashMap<>();
+
+        keywords.put("abstract", "abstract");
+        dataTypes.put("Array", "Array");
+        keywords.put("assert", "assert");
+        dataTypes.put("bool", "boolean");
+        keywords.put("break", "break");
+        dataTypes.put("byte", "byte");
+        keywords.put("case", "case");
+        keywords.put("catch", "catch");
+        keywords.put("Class", "Class");
+        keywords.put("continue", "continue");
+        keywords.put("default", "default");
+        keywords.put("do", "do");
+        dataTypes.put("double", "double");
+        keywords.put("elif", "else if");
+        keywords.put("else", "else");
+        dataTypes.put("enum", "enum");
+        keywords.put("extends", "extends");
+        keywords.put("final", "final");
+        keywords.put("finally", "finally");
+        dataTypes.put("float", "float");
+        keywords.put("for", "for");
+        keywords.put("if", "if");
+        keywords.put("in", " "); // Not sure how to make this work
+        dataTypes.put("int", "int");
+        keywords.put("implements", "implements");
+        keywords.put("import", "import");
+        keywords.put("instanceof", "instanceof");
+        keywords.put("Interface", "Interface");
+        dataTypes.put("long", "long");
+        keywords.put("native", "native");
+        keywords.put("new", "new");
+        keywords.put("package", "package");
+        keywords.put("println", "System.out.println");
+
+        accessSpecifiers.put("-", "private");
+        accessSpecifiers.put("#", "protected");
+        accessSpecifiers.put("+", "public");
+
+        keywords.put("return", "return");
+        dataTypes.put("short", "short");
+        keywords.put("static", "static");
+        keywords.put("stictfp", "strictfp");
+        keywords.put("super", "super");
+        keywords.put("switch", "switch");
+
         //Arithmetic
-        javaPlusPlusToJava.put("+", "+");
-        javaPlusPlusToJava.put("-", "-");
-        javaPlusPlusToJava.put("*", "*");
-        javaPlusPlusToJava.put("/", "/");
-        javaPlusPlusToJava.put("%", "%");
-        javaPlusPlusToJava.put("=", "=");
+
+        arithmeticOperators.put("+", "+");
+        arithmeticOperators.put("-", "-");
+        arithmeticOperators.put("*", "*");
+        arithmeticOperators.put("/", "/");
+        arithmeticOperators.put("%", "%");
+        arithmeticOperators.put("=", "=");
+
         // Comparative
-        javaPlusPlusToJava.put("is", "==");
-        javaPlusPlusToJava.put("<", "<");
-        javaPlusPlusToJava.put("<=", "<=");
-        javaPlusPlusToJava.put(">", ">");
-        javaPlusPlusToJava.put(">=", ">=");
 
-
-
+        comparativeOperators.put("is", "==");
+        comparativeOperators.put("<", "<");
+        comparativeOperators.put("<=", "<=");
+        comparativeOperators.put(">", ">");
+        comparativeOperators.put(">=", ">=");
+        comparativeOperators.put("!=", "!=");
 
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
         StringBuilder input = new StringBuilder();
         input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
         List<Token> tokens = tokenizer.tokenize(input.toString());
+        ArrayList<String> outputStringList = new ArrayList<>();
 
         // System.out.println("int numOne");
 //        System.out.println(tokenizer.tokenize("\"Hello Test\""));
 //        System.out.println(tokenizer.tokenize("int numOne"));
-//        System.out.println(tokenizer.tokenize("int  numOne"));
+        System.out.println(tokenizer.tokenize("int  numOne"));
 //        System.out.println((tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
-        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
+//        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
 
         // Iterate through tokens
         for (Token token : tokens) {
-            if (token.value.equals("if")) {
+            if (token.type == TokenType.Whitespace)
+            {
 
-            } else if (token.value.equals("elif")) {
+                outputStringList.add(token.value);
 
-            } else if (token.value.equals("else")) {
+            }
+            else if (token.type == TokenType.DataType)
+            {
 
-            } else if (token.value.equals("for")) {
+                outputStringList.add(dataTypes.get(token.value));
 
-            } else if (token.value.equals("while")) {
+            }
+            else if (token.type == TokenType.AccessSpecifier)
+            {
 
-            } else if (token.value.equals("return")) {
+                outputStringList.add(accessSpecifiers.get(token.value));
 
-            } else if (token.value.equals("func")) {
+            }
+            else if (token.type == TokenType.ReservedWord)
+            {
 
-            } else if (token.value.equals("def")) {
+                outputStringList.add(dataTypes.get(token.value));
 
-            } else if (token.value.equals("is")) {
+            }
+            else if (token.type == TokenType.Operator)
+            {
 
-            } else if (token.value.equals("in")) {
+                outputStringList.add(arithmeticOperators.get(token.value));
 
-            } else if (token.value.equals("static")) {
+            }
+            else if (token.type == TokenType.Punctuation)
+            {
 
-            } else if (token.value.equals("void")) {
-
-            } else if (token.value.equals("class")) {
-
-            } else if (token.value.equals("begin")) {
-
-            } else if (token.value.equals("end")) {
-
-            } else if (token.value.equals("println")) {
-
-            } else if (token.value.equals("int")) {
-
-            } else if (token.value.equals("char")) {
-
-            } else if (token.value.equals("String")) {
-
-            } else if (token.value.equals("bool")) {
-
-            } else if (token.value.equals("float")) {
-
-            } else if (token.value.equals("double")) {
-
-            } else if (token.value.equals("+")) {
-
-            } else if (token.value.equals("-")) {
-
-            } else if (token.value.equals("*")) {
-
-            } else if (token.value.equals("/")) {
-
-            } else if (token.value.equals("=")) {
-
-            } else if (token.value.equals("%")) {
-
-            } else if (token.value.equals("<")) {
-
-            } else if (token.value.equals("<=")) {
-
-            } else if (token.value.equals(">")) {
-
-            } else if (token.value.equals(">=")) {
-
-            } else if (token.value.equals("(")) {
-
-            } else if (token.value.equals(")")) {
-
-            } else if (token.value.equals("[")) {
-
-            } else if (token.value.equals("]")) {
-
-            } else if (token.value.equals("{")) {
-
-            } else if (token.value.equals("}")) {
-
-            } else if (token.value.equals(";")) {
-
-            } else if (token.value.equals(",")) {
+                outputStringList.add(token.value);
 
             }
         }
