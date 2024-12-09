@@ -44,34 +44,27 @@ public class interpreter {
 //        return s.pop();
 //    }
 
+
     public static void main(String[] args) {
-//        // Testing the evaluatePostFix function
-//        List<String> list = new ArrayList<String>();
-//        list.add("10");
-//        list.add("5");
-//        list.add("+");
-//        double result = evaluatePostfix(list);
-//        System.out.println(result); // Should produce 15.0
-//
-//        // Clear list
-//        list.clear();
-//        list.add("10");
-//        list.add("5");
-//        list.add("2");
-//        list.add("*");
-//        list.add("+");
-//        result = evaluatePostfix(list);
-//        System.out.println(result); // Should produce 20.0
-//
-//        // Clear list
-//        list.clear();
-//        list.add("8");
-//        list.add("3");
-//        list.add("-");
-//        result = evaluatePostfix(list);
-//        System.out.println(result); // Should produce 5.0
+        String[] javaKeywords = {"abstract", "assert", "boolean", "break", "byte",
+            "case", "catch", "char", "class", "const", "continue", "default", "do",
+            "double", "else", "enum", "extends", "final", "finally", "float", "for",
+            "goto", "if", "implements", "import", "instanceof", "int", "interface",
+            "long", "native", "new", "package", "private", "protected", "public",
+            "return", "short", "static", "strictfp", "super", "switch", "synchronized",
+            "this", "throw", "throws", "transient", "try", "void", "volatile", "while"};
+
+        String[] javaPlusPlusKeywords = {"abstract", "assert", "break", "case", "catch",
+            "continue", "default", "do", "elif", "else", "enum", "extends", "final",
+            "finally", "for", "func", "if", "implements", "import", "in", "instanceof",
+            "native", "new", "package", "return", "static", "strictfp", "super", "switch",
+            "synchronized", "throw", "throws", "transient", "try", "var", "void",
+            "volatile", "while"};
 
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
+        StringBuilder input = new StringBuilder();
+        input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
+        List<Token> tokens = tokenizer.tokenize(input.toString());
 
         // System.out.println("int numOne");
         System.out.println(tokenizer.tokenize("\"Hello Test\""));
