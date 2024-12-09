@@ -9,6 +9,7 @@ public class IDE implements ActionListener
 
     JMenuItem loadItem;
     JMenuItem saveItem;
+    JMenuItem runItem;
     JFrame mainFrame;
     JTextArea refactoringArea;
     JPPFileCreation jpp;
@@ -74,6 +75,15 @@ public class IDE implements ActionListener
 
         menuBar.add(editMenu);
 
+        JMenu codeMenu = new JMenu("Code");
+
+        runItem = new JMenuItem("Run");
+        runItem.addActionListener(this);
+
+        codeMenu.add(runItem);
+
+        menuBar.add(codeMenu);
+
         return menuBar;
 
     }
@@ -120,6 +130,12 @@ public class IDE implements ActionListener
                 jpp.writeToFile(file, refactoringAreaText);
 
             }
+
+        }
+        else if (e.getSource() == runItem)
+        {
+
+            System.out.println("run code");
 
         }
         else
