@@ -10,7 +10,7 @@ public class Main {
         String str8 = "private bool flag";
         String str9 = "\"Hello\"";
         String str10 = " 9_4a";
-        Lexer lexer = new Lexer(str3);
-        lexer.readInput();
+        String str11 = "numOne++";
+        String str12 = "+ class Person { }";
     }
 }
