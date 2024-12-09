@@ -7,6 +7,13 @@ public class IDE
     public static void main(String[] args)
     {
 
+        initIDE();
+
+    }
+
+    public static void initIDE()
+    {
+
         JFrame mainFrame = new JFrame("Java Plus Plus IDE");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(null);
