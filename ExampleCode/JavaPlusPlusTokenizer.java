@@ -35,6 +35,10 @@ class Token {
         this.value = value;
         this.type = type;
     }
+    @Override
+    public String toString() {
+        return "Token Value: " + this.value + " Token Type: " + this.type;
+    }
 }
 
 public class JavaPlusPlusTokenizer {
