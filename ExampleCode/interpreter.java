@@ -45,8 +45,8 @@ public class interpreter {
 //        return s.pop();
 //    }
 
-
-    public static void main(String[] args) {
+    public void interpret()
+    {
         String[] javaKeywords = {"abstract", "assert", "boolean", "break", "byte",
             "case", "catch", "char", "class", "const", "continue", "default", "do",
             "double", "else", "enum", "extends", "final", "finally", "float", "for",
@@ -132,8 +132,7 @@ public class interpreter {
         comparativeOperators.put("!=", "!=");
 
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
-        StringBuilder input = new StringBuilder();
-        input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
+        StringBuilder input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
         List<Token> tokens = tokenizer.tokenize(input.toString());
         ArrayList<String> outputStringList = new ArrayList<>();
 
@@ -177,6 +176,24 @@ public class interpreter {
 
             }
             else if (token.type == TokenType.Punctuation)
+            {
+
+                outputStringList.add(token.value);
+
+            }
+            else if (token.type == TokenType.NumericLiteral)
+            {
+
+                outputStringList.add(token.value);
+
+            }
+            else if (token.type == TokenType.Variable)
+            {
+
+                outputStringList.add(token.value);
+
+            }
+            else if (token.type == TokenType.EscapeSequence)
             {
 
                 outputStringList.add(token.value);
