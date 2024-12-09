@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -10,7 +11,14 @@ public class JPPFileCreation
     {
 
         File file = createOrAccessFile("JPPExample.jpp");
+        String textToAddToFile = "Testing";
+        writeToFile(file, textToAddToFile);
         readFromFile(file);
+        clearFile(file);
+        String textToAddToFile2 = "After Clear";
+        writeToFile(file, textToAddToFile2);
+        readFromFile(file);
+        clearFile(file);
 
     }
     public static File createOrAccessFile(String filePathAndName) {
@@ -62,6 +70,36 @@ public class JPPFileCreation
 
             e.printStackTrace();
 
+        }
+
+    }
+
+    public static void writeToFile(File file, String text)
+    {
+
+        try {
+            FileWriter writer = new FileWriter(file, true);
+            writer.write(text);
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void clearFile(File file)
+    {
+
+        try
+        {
+            FileWriter writer = new FileWriter(file, false); // 'false' disables append mode
+            writer.close(); // This clears the file
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
 
     }
