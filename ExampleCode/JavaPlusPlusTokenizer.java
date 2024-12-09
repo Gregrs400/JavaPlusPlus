@@ -6,6 +6,7 @@ import java.util.*;
 // Token types
 enum TokenType {
     NumericLiteral,
+    AccessSpecifier,
     StringLiteral,
     Operator,
     Variable,
@@ -58,11 +59,15 @@ public class JavaPlusPlusTokenizer {
     private final Set<String> punctuation = new HashSet<>(Arrays.asList(
             "(", ")", "[", "]", "{", "}", ";", ","
     ));
+    private final Set<String> accessSpecifiers = new HashSet<>(Arrays.asList("+", "-", "#"));
 
     // Categorize tokens based on value
     public TokenType categorizeToken(String token) {
         if (dataTypes.contains(token)) {
             return TokenType.DataType;
+        }
+        if (accessSpecifiers.contains(token)) {
+            return TokenType.AccessSpecifier;
         }
         if (reservedWords.contains(token)) {
             return TokenType.ReservedWord;
@@ -144,6 +149,7 @@ public class JavaPlusPlusTokenizer {
         }
 
         System.out.println("NumericLiterals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.NumericLiteral, Collections.emptyList())));
+        System.out.println("Access Specifiers: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.AccessSpecifier, Collections.emptyList())));
         System.out.println("StringLiterals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.StringLiteral, Collections.emptyList())));
         System.out.println("Operators: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Operator, Collections.emptyList())));
         System.out.println("Variables: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Variable, Collections.emptyList())));
