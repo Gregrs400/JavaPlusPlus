@@ -74,9 +74,11 @@ public class interpreter {
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
 
         // System.out.println("int numOne");
-        System.out.println(tokenizer.tokenize("\"Hello Test\""));
-        System.out.println(tokenizer.tokenize("int numOne"));
-        System.out.println(tokenizer.tokenize("int  numOne"));
+//        System.out.println(tokenizer.tokenize("\"Hello Test\""));
+//        System.out.println(tokenizer.tokenize("int numOne"));
+//        System.out.println(tokenizer.tokenize("int  numOne"));
+//        System.out.println((tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
+        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
 
     }
 }
