@@ -1,20 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class IDE
+public class IDE implements ActionListener
 {
 
-    public static void main(String[] args)
+    JMenuItem loadItem;
+    JMenuItem saveItem;
+    JFrame mainFrame;
+
+    public void initIDE()
     {
 
-        initIDE();
-
-    }
-
-    public static void initIDE()
-    {
-
-        JFrame mainFrame = new JFrame("Java Plus Plus IDE");
+        mainFrame = new JFrame("Java Plus Plus IDE");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(null);
         mainFrame.setLocationRelativeTo(null);
@@ -41,8 +40,56 @@ public class IDE
 
         mainFrame.add(outputAreaPanel);
 
+        JMenuBar menuBar = initMenuBar();
+
+        mainFrame.setJMenuBar(menuBar);
+
         mainFrame.setVisible(true);
 
     }
 
+    public JMenuBar initMenuBar()
+    {
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+
+        loadItem = new JMenuItem("Load");
+        loadItem.addActionListener(this);
+
+        saveItem = new JMenuItem("Save");
+        saveItem.addActionListener(this);
+
+        fileMenu.add(loadItem);
+        fileMenu.add(saveItem);
+
+        menuBar.add(fileMenu);
+
+        JMenu editMenu = new JMenu("Edit");
+
+        menuBar.add(editMenu);
+
+        return menuBar;
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+
+        if (e.getSource() == loadItem)
+        {
+            System.out.println("load file");
+        }
+        else if (e.getSource() == saveItem)
+        {
+            System.out.println("save file");
+        }
+        else
+        {
+            System.out.println("error");
+        }
+
+    }
 }
