@@ -1,5 +1,7 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class JPPFileCreation
 {
@@ -7,10 +9,11 @@ public class JPPFileCreation
     public static void main(String[] args)
     {
 
-        createOrAccessFile("JPPExample.jpp");
+        File file = createOrAccessFile("JPPExample.jpp");
+        readFromFile(file);
 
     }
-    public static void createOrAccessFile(String filePathAndName) {
+    public static File createOrAccessFile(String filePathAndName) {
 
         try {
 
@@ -26,9 +29,37 @@ public class JPPFileCreation
 
             }
 
+            return file;
+
         } catch (IOException e) {
 
             System.out.println("IOException occurred");
+            e.printStackTrace();
+
+            return null;
+
+        }
+
+    }
+    public static void readFromFile(File file)
+    {
+
+        try
+        {
+
+            Scanner fileReader = new Scanner(file);
+
+            while (fileReader.hasNextLine())
+            {
+
+                System.out.println(fileReader.nextLine());
+
+            }
+
+        }
+        catch (FileNotFoundException e)
+        {
+
             e.printStackTrace();
 
         }
