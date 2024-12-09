@@ -60,7 +60,7 @@ public class JavaPlusPlusTokenizer {
     ));
 
     // Categorize tokens based on value
-    private static TokenType categorizeToken(String token) {
+    public static TokenType categorizeToken(String token) {
         if (dataTypes.contains(token)) {
             return TokenType.DataType;
         }
@@ -86,7 +86,7 @@ public class JavaPlusPlusTokenizer {
     }
 
     // Tokenize the input string into tokens
-    private static List<Token> tokenize(String input) {
+    public static List<Token> tokenize(String input) {
         List<Token> tokens = new ArrayList<>();
         StringBuilder currentToken = new StringBuilder();
         boolean stringflag = false;
@@ -136,7 +136,7 @@ public class JavaPlusPlusTokenizer {
     }
 
     // Function to print categorized tokens
-    private static void printReport(List<Token> tokens, int lineCount) {
+    public static void printReport(List<Token> tokens) {
         Map<TokenType, List<String>> categorizedTokens = new HashMap<>();
 
         for (Token token : tokens) {
@@ -151,20 +151,11 @@ public class JavaPlusPlusTokenizer {
         System.out.println("Reserved Words: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.ReservedWord, Collections.emptyList())));
         System.out.println("Data Types: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.DataType, Collections.emptyList())));
         System.out.println("Unknown: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Unknown, Collections.emptyList())));
-
-        System.out.println("Line Count (excluding comments): " + lineCount);
-
     }
 
-    public static void main(String[] args){
 
-        File inputFile = new File("C:\\Users\\mrami\\IdeaProjects\\JavaPlusPlusTokenizer_atmp1\\src\\MangoCode.txt");
-
-        if (!inputFile.exists()) {
-            System.err.println("Error: Could not open the file!");
-            return;
-        }
-
+    public static StringBuilder readFile(String filePath) {
+        File inputFile = new File(filePath);
         StringBuilder input = new StringBuilder();
         int lineCount = 0;
 
@@ -181,13 +172,8 @@ public class JavaPlusPlusTokenizer {
             }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
-            return;
+            return input;
         }
-
-        // Tokenize input
-        List<Token> tokens = tokenize(input.toString());
-
-        // Print categorized tokens
-        printReport(tokens, lineCount);
+        return input;
     }
 }
