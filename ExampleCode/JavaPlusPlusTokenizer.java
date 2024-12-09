@@ -14,6 +14,7 @@ enum TokenType {
     DataType,
     Punctuation,
     Whitespace,
+    EscapeSequence,
     Unknown
 }
 
@@ -65,6 +66,9 @@ public class JavaPlusPlusTokenizer {
     private final Set<String> punctuation = new HashSet<>(Arrays.asList(
             "(", ")", "[", "]", "{", "}", ";", ","
     ));
+    private final Set<String> escapeSequences = new HashSet<>(Arrays.asList(
+            "\n", "\r", "\t"
+    ));
     private final Set<String> accessSpecifiers = new HashSet<>(Arrays.asList("+", "-", "#"));
 
     // Categorize tokens based on value
@@ -91,11 +95,15 @@ public class JavaPlusPlusTokenizer {
             return TokenType.Variable;
         }
         if (token.charAt(0) == '\"'){
-            return  TokenType.StringLiteral;
+            return TokenType.StringLiteral;
         }
         if (token.charAt(0) == ' ')
         {
             return TokenType.Whitespace;
+        }
+        if (escapeSequences.contains(token))
+        {
+            return TokenType.EscapeSequence;
         }
         return TokenType.Unknown;
     }
@@ -115,6 +123,20 @@ public class JavaPlusPlusTokenizer {
                 // Many times punctuation will be found touching char, this will
                 // record punctuation while the token is being scanned
 
+                if (ch == '\n')
+                {
+                    if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
+                    {
+                        tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                        currentToken.setLength(0);
+
+                    }
+
+                    currentToken.append(ch);
+                    tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                    currentToken.setLength(0);
+
+                }
                 if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
                 {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
@@ -207,7 +229,7 @@ public class JavaPlusPlusTokenizer {
                 if (trimmedLine.startsWith("//") || trimmedLine.isEmpty()) {
                     continue;
                 }
-                input.append(line).append(" ");
+                input.append(line).append("\n");
             }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());

@@ -128,9 +128,11 @@ public class interpreter {
         List<Token> tokens = tokenizer.tokenize(input.toString());
 
         // System.out.println("int numOne");
-        System.out.println(tokenizer.tokenize("\"Hello Test\""));
-        System.out.println(tokenizer.tokenize("int numOne"));
-        System.out.println(tokenizer.tokenize("int  numOne"));
+//        System.out.println(tokenizer.tokenize("\"Hello Test\""));
+//        System.out.println(tokenizer.tokenize("int numOne"));
+//        System.out.println(tokenizer.tokenize("int  numOne"));
+//        System.out.println((tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
+        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
 
         // Iterate through tokens
         for (Token token : tokens) {
