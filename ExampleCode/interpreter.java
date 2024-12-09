@@ -76,6 +76,7 @@ public class interpreter {
         // System.out.println("int numOne");
         System.out.println(tokenizer.tokenize("\"Hello Test\""));
         System.out.println(tokenizer.tokenize("int numOne"));
+        System.out.println(tokenizer.tokenize("int  numOne"));
 
     }
 }
