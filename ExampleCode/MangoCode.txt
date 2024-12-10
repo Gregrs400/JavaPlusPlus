@@ -1,9 +1,0 @@
-// Sample file that will appear in Java++
-
-+ class Test
-begin
-    + static void main(String args[])
-    begin
-        println("Hello, this is a print statement in Java++.");
-    end
-end
