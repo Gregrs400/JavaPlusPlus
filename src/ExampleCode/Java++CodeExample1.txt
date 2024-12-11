@@ -2,7 +2,7 @@
 
 + class Test
 begin
-    + static void main(String args[])
+    + static void main(String[] args)
     begin
         println("Hello, this is a print statement in Java++.");
     end
