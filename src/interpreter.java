@@ -82,7 +82,7 @@ public class interpreter
         comparativeOperators.put("!=", "!=");
 
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
-        StringBuilder input = tokenizer.readFile("ExampleCode\\Java++CodeExample1.txt");
+        String input = tokenizer.readFile("ExampleCode\\Java++CodeExample1.txt");
         List<Token> tokens = tokenizer.tokenize(input.toString());
         ArrayList<String> outputStringList = new ArrayList<>();
 

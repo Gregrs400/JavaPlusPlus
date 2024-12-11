@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class JavaPlusPlusTokenizer {
@@ -118,13 +120,16 @@ public class JavaPlusPlusTokenizer {
                         currentToken.setLength(0);
 
                     }
+//                    else
+//                    {
 
-                    currentToken.append(ch);
-                    tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
-                    currentToken.setLength(0);
+                        currentToken.append(ch);
+                        tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                        currentToken.setLength(0);
+//                    }
 
                 }
-                if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)) && !punctuation.contains(String.valueOf(ch)))
+                else if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)) && !punctuation.contains(String.valueOf(ch)))
                 {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
                     currentToken.setLength(0);
@@ -147,6 +152,12 @@ public class JavaPlusPlusTokenizer {
                 else if (!currentToken.isEmpty() && Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
                 {
                     currentToken.append(' ');
+                }
+                else if (currentToken.isEmpty() && Character.isWhitespace(ch))
+                {
+
+                    currentToken.append(ch);
+
                 }
 
                 else if (!currentToken.isEmpty()) {
@@ -217,20 +228,23 @@ public class JavaPlusPlusTokenizer {
     }
 
 
-    public StringBuilder readFile(String filePath) {
+    public String readFile(String filePath) {
         File inputFile = new File(filePath);
-        StringBuilder input = new StringBuilder();
+//        StringBuilder input = new StringBuilder();
+        String input = "";
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
-            String line;
+        try {
 
-            while ((line = reader.readLine()) != null) {
-                String trimmedLine = line.trim();
-                if (trimmedLine.startsWith("//") || trimmedLine.isEmpty()) {
-                    continue;
-                }
-                input.append(line).append("\n");
-            }
+            input = Files.readString(Path.of(filePath));
+//            String line;
+//
+//            while ((line = reader.readLine()) != null) {
+//                String trimmedLine = line.replaceAll("1", "1");
+//                if (trimmedLine.startsWith("//") || trimmedLine.isEmpty()) {
+//                    continue;
+//                }
+//                input.append(line).append("\n");
+//            }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
             return input;
