@@ -104,6 +104,7 @@ public class JavaPlusPlusTokenizer {
                 // Many times punctuation will be found touching char, this will
                 // record punctuation while the token is being scanned
 
+                // new line checker
                 if (ch == '\n')
                 {
                     if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
@@ -137,7 +138,7 @@ public class JavaPlusPlusTokenizer {
                 continue;
             }
 
-            if (currentToken.length() > 1 && !Character.isWhitespace(ch) && Character.isWhitespace(currentToken.charAt(currentToken.length()-1)))
+            if (currentToken.length() > 1 && !Character.isWhitespace(ch) && Character.isWhitespace(currentToken.charAt(currentToken.length()-1))  && !stringFlag)
             {
 
                 tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
