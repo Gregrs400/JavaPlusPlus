@@ -1,49 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-
-
-// Token types
-enum TokenType {
-    NumericLiteral,
-    AccessSpecifier,
-    StringLiteral,
-    Operator,
-    Variable,
-    ReservedWord,
-    DataType,
-    Punctuation,
-    Whitespace,
-    EscapeSequence,
-    Unknown
-}
-
-
-////something to hold string literals because strings can be a lot of things
-//class sL{
-//    char val;
-//
-//    sL(char val){
-//        this.val = val;
-//    }
-//}
-
-// Token class
-class Token {
-    String value;
-    TokenType type;
-
-    Token(String value, TokenType type) {
-        this.value = value;
-        this.type = type;
-    }
-
-    public String toString()
-    {
-        return "[" + this.value + ", " + this.type + "]";
-    }
-}
-
 public class JavaPlusPlusTokenizer {
 
     //TODO: Questions for how to differentiate certain tokens
