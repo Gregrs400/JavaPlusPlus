@@ -93,12 +93,12 @@ public class JavaPlusPlusTokenizer {
     // Tokenize the input string into tokens
     public List<Token> tokenize(String input) {
         StringBuilder currentToken = new StringBuilder();
-        boolean stringflag = false;
+        boolean stringFlag = false;
 
         for (char ch : input.toCharArray()) {
             //exception must be made when " appears in code. It will create a string literal
 
-            if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringflag))
+            if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringFlag))
             {
 
                 // Many times punctuation will be found touching char, this will
@@ -146,15 +146,15 @@ public class JavaPlusPlusTokenizer {
             }
 
             // crude way of doing this but ill explain
-            if(ch == '\"' && !stringflag) {  // a flag is used to see if we are in a "string"
+            if(ch == '\"' && !stringFlag) {  // a flag is used to see if we are in a "string"
                 currentToken.append(ch);
-                stringflag = true;           // once we enter a "string" we set the flag to true
+                stringFlag = true;           // once we enter a "string" we set the flag to true
 
             }else if(ch == '\"') {           // finding another quotation means we exit the "string"
                 currentToken.append(ch);
-                stringflag = false;
+                stringFlag = false;
 
-            }else if(stringflag) {          // we keep appending all chars while the flag is true
+            }else if(stringFlag) {          // we keep appending all chars while the flag is true
                 currentToken.append(ch);
 
             } else if ((Character.isLetterOrDigit(ch) || operators.contains(String.valueOf(ch)))) {
