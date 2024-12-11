@@ -54,7 +54,7 @@ public class interpreter
         dataTypes.put("float", "float");
         keywords.put("for", "for");
         keywords.put("if", "if");
-        keywords.put("in", " "); // Not sure how to make this work
+        keywords.put("in", " "); // Need built-in linear search, token before is what is being searched for, token after is where we're searching
         dataTypes.put("int", "int");
         keywords.put("implements", "implements");
         keywords.put("import", "import");
