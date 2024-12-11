@@ -40,7 +40,7 @@ public class interpreter
         dataTypes.put("byte", "byte");
         keywords.put("case", "case");
         keywords.put("catch", "catch");
-        keywords.put("Class", "Class");
+        keywords.put("class", "class");
         keywords.put("continue", "continue");
         keywords.put("default", "default");
         keywords.put("do", "do");
