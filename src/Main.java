@@ -8,11 +8,11 @@ public class Main {
     public static void main(String[] args){
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
         StringBuilder input = new StringBuilder();
-        input = tokenizer.readFile("ExampleCode\\Java++CodeExample1.txt");
+        input = tokenizer.readFile("src\\ExampleCode\\Java++CodeExample1.txt");
+        System.out.println(input.toString());
         List<Token> tokens = tokenizer.tokenize(input.toString());
-        tokenizer.printReport(tokens);
         for (Token token : tokens) {
-            System.out.println(token.toString());
+            System.out.print(token.toString());
         }
 //        String str1 = "if";
 //        String str2 = "if elif else";
