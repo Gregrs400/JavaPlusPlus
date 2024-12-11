@@ -1,5 +1,3 @@
-// Sample file that will appear in Java++
-
 + class Test
 begin
     + static void main(String[] args)
