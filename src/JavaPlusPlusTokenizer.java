@@ -98,6 +98,11 @@ public class JavaPlusPlusTokenizer {
         for (char ch : input.toCharArray()) {
             //exception must be made when " appears in code. It will create a string literal
 
+            if (punctuation.contains(currentToken.toString()))
+            {
+                tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                currentToken.setLength(0);
+            }
             if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringFlag))
             {
 
@@ -119,11 +124,24 @@ public class JavaPlusPlusTokenizer {
                     currentToken.setLength(0);
 
                 }
-                if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
+                if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)) && !punctuation.contains(String.valueOf(ch)))
                 {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
                     currentToken.setLength(0);
                     currentToken.append(' ');
+                }
+                else if (punctuation.contains(String.valueOf(ch)))
+                {
+                    if (!currentToken.isEmpty())
+                    {
+                        tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                        currentToken.setLength(0);
+                        currentToken.append(ch);
+                    }
+                    else
+                        currentToken.append(ch);
+
+
                 }
 
                 else if (!currentToken.isEmpty() && Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
