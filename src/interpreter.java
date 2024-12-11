@@ -6,44 +6,8 @@ import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-public class interpreter {
-//    private static Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-
-//    public static boolean isNumber(String str) {
-//        if (str == null) {
-//            return false;
-//        }
-//        return pattern.matcher(str).matches();
-//    }
-//    private static double evaluatePostfix(List<String> postfix) {
-//        Stack<Double> s = new Stack<>();
-//        for (String token : postfix) {
-//            if (isNumber(token)) {
-//                s.push(Double.parseDouble(token));
-//            } else if (token.equals("+")) {
-//                double rightOperand = s.pop();
-//                double leftOperand = s.pop();
-//                s.push(rightOperand + leftOperand);
-//            } else if (token.equals("-")) {
-//                double rightOperand = s.pop();
-//                double leftOperand = s.pop();
-//                s.push(leftOperand - rightOperand);
-//            } else if (token.equals("*")) {
-//                double rightOperand = s.pop();
-//                double leftOperand = s.pop();
-//                s.push(rightOperand * leftOperand);
-//            } else if (token.equals("/")) {
-//                double rightOperand = s.pop();
-//                double leftOperand = s.pop();
-//                s.push(rightOperand + leftOperand);
-//            } else if (token.equals("%")) {
-//                double rightOperand = s.pop();
-//                double leftOperand = s.pop();
-//                s.push(leftOperand % rightOperand);
-//            }
-//        }
-//        return s.pop();
-//    }
+public class interpreter
+{
 
     public void interpret()
     {
