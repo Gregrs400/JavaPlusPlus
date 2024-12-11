@@ -120,13 +120,24 @@ public class JavaPlusPlusTokenizer {
                         currentToken.setLength(0);
 
                     }
-//                    else
-//                    {
+                    else if (currentToken.toString().equals("\r"))
+                    {
 
-                        currentToken.append(ch);
                         tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
                         currentToken.setLength(0);
-//                    }
+
+                    }
+
+                    currentToken.append(ch);
+                    tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                    currentToken.setLength(0);
+
+
+                }
+                else if (ch == '\r')
+                {
+
+                    currentToken.append(ch);
 
                 }
                 else if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)) && !punctuation.contains(String.valueOf(ch)))

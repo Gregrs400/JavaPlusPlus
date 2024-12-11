@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.List;
 
 public class Main {
@@ -7,8 +8,18 @@ public class Main {
         input = tokenizer.readFile("src\\ExampleCode\\Java++CodeExample1.txt");
         System.out.println(input.toString());
         List<Token> tokens = tokenizer.tokenize(input.toString());
+//        for (Token token : tokens) {
+//            System.out.println(token.toString());
+//        }
+        StringBuilder tokenString = new StringBuilder();
         for (Token token : tokens) {
-            System.out.print(token.toString());
+            tokenString.append(token.value);
         }
+        JPPFileCreation jpp = new JPPFileCreation();
+
+        File outputFile = jpp.createOrAccessFile("src\\ExampleCode\\outputFileTest.jpp");
+
+        jpp.writeToFile(outputFile, tokenString.toString());
+
     }
 }

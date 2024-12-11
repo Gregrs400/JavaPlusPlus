@@ -1,17 +1,12 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
-import java.util.regex.Pattern;
 
 public class interpreter
 {
 
-    public void interpret()
+    public String interpret(String filePath)
     {
-
+        
         HashMap<String, String> keywords = new HashMap<>();
         HashMap<String, String> dataTypes = new HashMap<>();
         HashMap<String, String> arithmeticOperators = new HashMap<>();
@@ -82,74 +77,75 @@ public class interpreter
         comparativeOperators.put("!=", "!=");
 
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
-        String input = tokenizer.readFile("ExampleCode\\Java++CodeExample1.txt");
-        List<Token> tokens = tokenizer.tokenize(input.toString());
-        ArrayList<String> outputStringList = new ArrayList<>();
+        String input = tokenizer.readFile(filePath);
+        List<Token> tokens = tokenizer.tokenize(input);
+        StringBuilder outputString = new StringBuilder();
 
-        // System.out.println("int numOne");
-//        System.out.println(tokenizer.tokenize("\"Hello Test\""));
-//        System.out.println(tokenizer.tokenize("int numOne"));
-        System.out.println(tokenizer.tokenize("int  numOne"));
-//        System.out.println((tokenizer.readFile("ExampleCode/Java++CodeExample1.txt").toString()));
-//        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/Java++CodeExample1.txt").toString()));
 
         // Iterate through tokens
         for (Token token : tokens) {
             if (token.type == TokenType.Whitespace)
             {
 
-                outputStringList.add(token.value);
+                outputString.append(token.value);
 
             }
             else if (token.type == TokenType.DataType)
             {
 
-                outputStringList.add(dataTypes.get(token.value));
+                outputString.append(dataTypes.get(token.value));
 
             }
             else if (token.type == TokenType.AccessSpecifier)
             {
 
-                outputStringList.add(accessSpecifiers.get(token.value));
+                outputString.append(accessSpecifiers.get(token.value));
 
             }
             else if (token.type == TokenType.ReservedWord)
             {
 
-                outputStringList.add(dataTypes.get(token.value));
+                outputString.append(dataTypes.get(token.value));
 
             }
             else if (token.type == TokenType.Operator)
             {
 
-                outputStringList.add(arithmeticOperators.get(token.value));
+                outputString.append(arithmeticOperators.get(token.value));
 
             }
             else if (token.type == TokenType.Punctuation)
             {
 
-                outputStringList.add(token.value);
+                outputString.append(token.value);
 
             }
             else if (token.type == TokenType.NumericLiteral)
             {
 
-                outputStringList.add(token.value);
+                outputString.append(token.value);
 
             }
             else if (token.type == TokenType.Variable)
             {
 
-                outputStringList.add(token.value);
+                outputString.append(token.value);
 
             }
             else if (token.type == TokenType.EscapeSequence)
             {
 
-                outputStringList.add(token.value);
+                outputString.append(token.value);
+
+            }
+            else if (token.type == TokenType.StringLiteral)
+            {
+
+                outputString.append(token.value);
 
             }
         }
 
+        return outputString.toString();
     }
 }
