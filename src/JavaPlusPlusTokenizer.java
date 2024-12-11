@@ -28,6 +28,8 @@ public class JavaPlusPlusTokenizer {
     ));
     private final Set<String> accessSpecifiers = new HashSet<>(Arrays.asList("+", "-", "#"));
 
+    public List<Token> tokens = new ArrayList<>();
+
     // Categorize tokens based on value
     public TokenType categorizeToken(String token) {
         if (dataTypes.contains(token)) {
@@ -35,6 +37,29 @@ public class JavaPlusPlusTokenizer {
         }
         if (accessSpecifiers.contains(token)) {
             return TokenType.AccessSpecifier;
+        }
+        if (token.equals("+"))
+        {
+
+            if (tokens.isEmpty())
+            {
+
+                return TokenType.AccessSpecifier;
+
+            }
+            else if (tokens.get(tokens.size()-1).value.equals("\n") || tokens.get(tokens.size()-1).type == TokenType.Whitespace)
+            {
+
+                return TokenType.AccessSpecifier;
+
+            }
+            else
+            {
+
+                return TokenType.Operator;
+
+            }
+
         }
         if (reservedWords.contains(token)) {
             return TokenType.ReservedWord;
@@ -67,7 +92,6 @@ public class JavaPlusPlusTokenizer {
 
     // Tokenize the input string into tokens
     public List<Token> tokenize(String input) {
-        List<Token> tokens = new ArrayList<>();
         StringBuilder currentToken = new StringBuilder();
         boolean stringflag = false;
 
