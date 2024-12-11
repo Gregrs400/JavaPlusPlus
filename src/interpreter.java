@@ -132,7 +132,7 @@ public class interpreter {
         comparativeOperators.put("!=", "!=");
 
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
-        StringBuilder input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
+        StringBuilder input = tokenizer.readFile("ExampleCode\\Java++CodeExample1.txt");
         List<Token> tokens = tokenizer.tokenize(input.toString());
         ArrayList<String> outputStringList = new ArrayList<>();
 
@@ -140,8 +140,8 @@ public class interpreter {
 //        System.out.println(tokenizer.tokenize("\"Hello Test\""));
 //        System.out.println(tokenizer.tokenize("int numOne"));
         System.out.println(tokenizer.tokenize("int  numOne"));
-//        System.out.println((tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
-//        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/MangoCode.txt").toString()));
+//        System.out.println((tokenizer.readFile("ExampleCode/Java++CodeExample1.txt").toString()));
+//        System.out.println(tokenizer.tokenize(tokenizer.readFile("ExampleCode/Java++CodeExample1.txt").toString()));
 
         // Iterate through tokens
         for (Token token : tokens) {

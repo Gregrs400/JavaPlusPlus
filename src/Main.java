@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args){
         JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
         StringBuilder input = new StringBuilder();
-        input = tokenizer.readFile("ExampleCode\\MangoCode.txt");
+        input = tokenizer.readFile("ExampleCode\\Java++CodeExample1.txt");
         List<Token> tokens = tokenizer.tokenize(input.toString());
         tokenizer.printReport(tokens);
         for (Token token : tokens) {
