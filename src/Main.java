@@ -21,5 +21,8 @@ public class Main {
 
         jpp.writeToFile(outputFile, tokenString.toString());
 
+        IDE ide = new IDE();
+
+        ide.initIDE();
     }
 }
