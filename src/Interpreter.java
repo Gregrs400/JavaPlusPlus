@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.List;
 
-public class interpreter
+public class Interpreter
 {
 
     public String interpret(String filePath)
@@ -12,6 +12,7 @@ public class interpreter
         HashMap<String, String> arithmeticOperators = new HashMap<>();
         HashMap<String, String> comparativeOperators = new HashMap<>();
         HashMap<String, String> accessSpecifiers = new HashMap<>();
+        HashMap<String, String> punctuation = new HashMap<>();
 
         keywords.put("abstract", "abstract");
         dataTypes.put("Array", "Array");
@@ -46,6 +47,7 @@ public class interpreter
         keywords.put("new", "new");
         keywords.put("package", "package");
         keywords.put("println", "System.out.println");
+        keywords.put("void", "void");
 
         accessSpecifiers.put("-", "private");
         accessSpecifiers.put("#", "protected");
@@ -57,6 +59,9 @@ public class interpreter
         keywords.put("stictfp", "strictfp");
         keywords.put("super", "super");
         keywords.put("switch", "switch");
+        keywords.put("begin", "{");
+        keywords.put("end", "}");
+        dataTypes.put("String", "String");
 
         //Arithmetic
 
@@ -105,7 +110,7 @@ public class interpreter
             else if (token.type == TokenType.ReservedWord)
             {
 
-                outputString.append(dataTypes.get(token.value));
+                outputString.append(keywords.get(token.value));
 
             }
             else if (token.type == TokenType.Operator)
@@ -129,7 +134,12 @@ public class interpreter
             else if (token.type == TokenType.Variable)
             {
 
-                outputString.append(token.value);
+                if(token.value.equals("begin\r\n"))
+                    outputString.append("{");
+                else if (token.value.equals("end\r\n"))
+                    outputString.append("}");
+                else
+                    outputString.append(token.value);
 
             }
             else if (token.type == TokenType.EscapeSequence)
