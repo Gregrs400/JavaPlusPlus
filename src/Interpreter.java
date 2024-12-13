@@ -14,57 +14,59 @@ public class Interpreter
         HashMap<String, String> accessSpecifiers = new HashMap<>();
         HashMap<String, String> punctuation = new HashMap<>();
 
+        // Initializing keywords hashmap
         keywords.put("abstract", "abstract");
-        dataTypes.put("Array", "Array");
         keywords.put("assert", "assert");
-        dataTypes.put("bool", "boolean");
+        keywords.put("begin", "{");
         keywords.put("break", "break");
-        dataTypes.put("byte", "byte");
         keywords.put("case", "case");
         keywords.put("catch", "catch");
         keywords.put("class", "class");
         keywords.put("continue", "continue");
         keywords.put("default", "default");
         keywords.put("do", "do");
-        dataTypes.put("double", "double");
         keywords.put("elif", "else if");
         keywords.put("else", "else");
-        dataTypes.put("enum", "enum");
+        keywords.put("end", "}");
         keywords.put("extends", "extends");
         keywords.put("final", "final");
         keywords.put("finally", "finally");
-        dataTypes.put("float", "float");
         keywords.put("for", "for");
         keywords.put("if", "if");
         keywords.put("in", " "); // Need built-in linear search, token before is what is being searched for, token after is where we're searching
-        dataTypes.put("int", "int");
         keywords.put("implements", "implements");
         keywords.put("import", "import");
         keywords.put("instanceof", "instanceof");
         keywords.put("Interface", "Interface");
-        dataTypes.put("long", "long");
         keywords.put("native", "native");
         keywords.put("new", "new");
         keywords.put("package", "package");
         keywords.put("println", "System.out.println");
-        keywords.put("void", "void");
-
-        accessSpecifiers.put("-", "private");
-        accessSpecifiers.put("#", "protected");
-        accessSpecifiers.put("+", "public");
-
         keywords.put("return", "return");
-        dataTypes.put("short", "short");
         keywords.put("static", "static");
         keywords.put("stictfp", "strictfp");
         keywords.put("super", "super");
         keywords.put("switch", "switch");
-        keywords.put("begin", "{");
-        keywords.put("end", "}");
+        keywords.put("void", "void");
+
+        // Initializing dataTypes hashmap
+        dataTypes.put("Array", "Array");
+        dataTypes.put("bool", "boolean");
+        dataTypes.put("byte", "byte");
+        dataTypes.put("double", "double");
+        dataTypes.put("enum", "enum");
+        dataTypes.put("float", "float");
+        dataTypes.put("int", "int");
+        dataTypes.put("long", "long");
+        dataTypes.put("short", "short");
         dataTypes.put("String", "String");
 
-        //Arithmetic
+        // Initializing accessSpecifiers hashmap
+        accessSpecifiers.put("-", "private");
+        accessSpecifiers.put("#", "protected");
+        accessSpecifiers.put("+", "public");
 
+        // Initializing arithmeticOperators hashmap
         arithmeticOperators.put("+", "+");
         arithmeticOperators.put("-", "-");
         arithmeticOperators.put("*", "*");
@@ -72,8 +74,7 @@ public class Interpreter
         arithmeticOperators.put("%", "%");
         arithmeticOperators.put("=", "=");
 
-        // Comparative
-
+        // Initializing comparativeOperators hashmap
         comparativeOperators.put("is", "==");
         comparativeOperators.put("<", "<");
         comparativeOperators.put("<=", "<=");
