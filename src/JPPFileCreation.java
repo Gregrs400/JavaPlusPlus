@@ -7,21 +7,7 @@ import java.util.Scanner;
 public class JPPFileCreation
 {
 
-    public static void main(String[] args)
-    {
-
-        File file = createOrAccessFile("JPPExample.jpp");
-        String textToAddToFile = "Testing";
-        writeToFile(file, textToAddToFile);
-        readFromFile(file);
-        clearFile(file);
-        String textToAddToFile2 = "After Clear";
-        writeToFile(file, textToAddToFile2);
-        readFromFile(file);
-        clearFile(file);
-
-    }
-    public static File createOrAccessFile(String filePathAndName) {
+    public File createOrAccessFile(String filePathAndName) {
 
         try {
 
@@ -49,8 +35,10 @@ public class JPPFileCreation
         }
 
     }
-    public static void readFromFile(File file)
+    public String readFromFile(File file)
     {
+
+        StringBuilder fileString = new StringBuilder();
 
         try
         {
@@ -60,9 +48,12 @@ public class JPPFileCreation
             while (fileReader.hasNextLine())
             {
 
-                System.out.println(fileReader.nextLine());
+                fileString.append(fileReader.nextLine());
+                fileString.append(System.getProperty("line.separator"));
 
             }
+
+            return fileString.toString();
 
         }
         catch (FileNotFoundException e)
@@ -72,9 +63,11 @@ public class JPPFileCreation
 
         }
 
+        return null;
+
     }
 
-    public static void writeToFile(File file, String text)
+    public void writeToFile(File file, String text)
     {
 
         try {
@@ -89,7 +82,7 @@ public class JPPFileCreation
 
     }
 
-    public static void clearFile(File file)
+    public void clearFile(File file)
     {
 
         try

@@ -1,0 +1,11 @@
++ class Test
+begin
+    + static void main(String[] args)
+    begin
+        println("Hello, this is a print statement in Java++.");
+        int x = 10;
+        int y = 5;
+        int z = x * y;
+        println(z);
+    end
+end

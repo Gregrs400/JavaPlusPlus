@@ -1,16 +1,26 @@
+import java.io.File;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args){
-        String str1 = "if";
-        String str2 = "if elif else";
-        String str3 = "for int i = 0";
-        String str4 = "while x = myNum";
-        String str5 = "public str myString";
-        String str6 = "private char grade";
-        String str7 = "+ - * / % =";
-        String str8 = "private bool flag";
-        String str9 = "\"Hello\"";
-        String str10 = " 9_4a";
-        String str11 = "numOne++";
-        String str12 = "+ class Person { }";
+        JavaPlusPlusTokenizer tokenizer = new JavaPlusPlusTokenizer();
+        String input;
+        input = tokenizer.readFile("src\\ExampleCode\\Java++CodeExample1.jpp");
+        System.out.println(input.toString());
+        List<Token> tokens = tokenizer.tokenize(input.toString());
+
+        StringBuilder tokenString = new StringBuilder();
+        for (Token token : tokens) {
+            tokenString.append(token.value);
+        }
+        JPPFileCreation jpp = new JPPFileCreation();
+
+        File outputFile = jpp.createOrAccessFile("src\\ExampleCode\\outputFileTest.jpp");
+
+        jpp.writeToFile(outputFile, tokenString.toString());
+
+        IDE ide = new IDE();
+
+        ide.initIDE();
     }
 }

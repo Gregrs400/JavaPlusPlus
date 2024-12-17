@@ -1,40 +1,7 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
-
-
-
-// Token types
-enum TokenType {
-    NumericLiteral,
-    StringLiteral,
-    Operator,
-    Variable,
-    ReservedWord,
-    DataType,
-    Punctuation,
-    Unknown
-}
-
-
-////something to hold string literals because strings can be a lot of things
-//class sL{
-//    char val;
-//
-//    sL(char val){
-//        this.val = val;
-//    }
-//}
-
-// Token class
-class Token {
-    String value;
-    TokenType type;
-
-    Token(String value, TokenType type) {
-        this.value = value;
-        this.type = type;
-    }
-}
 
 public class JavaPlusPlusTokenizer {
 
@@ -45,24 +12,56 @@ public class JavaPlusPlusTokenizer {
     // and other possible additions to reserved Words (static, void, class)
 
     //Define reserved words and data types
-    private static final Set<String> reservedWords = new HashSet<>(Arrays.asList(
+    private final Set<String> reservedWords = new HashSet<>(Arrays.asList(
             "if", "elif", "else", "for", "while", "return", "func", "def", "is", "in",
             "static", "void", "class", "begin", "end", "println"
     ));
-    private static final Set<String> dataTypes = new HashSet<>(Arrays.asList(
+    private final Set<String> dataTypes = new HashSet<>(Arrays.asList(
             "int", "char", "String", "bool", "float", "double"
     ));
-    private static final Set<String> operators = new HashSet<>(Arrays.asList(
+    private final Set<String> operators = new HashSet<>(Arrays.asList(
             "+", "-", "*", "/", "=", "%", "<", "<=", ">", ">=" , "is"
     ));
-    private static final Set<String> punctuation = new HashSet<>(Arrays.asList(
+    private final Set<String> punctuation = new HashSet<>(Arrays.asList(
             "(", ")", "[", "]", "{", "}", ";", ","
     ));
+    private final Set<String> escapeSequences = new HashSet<>(Arrays.asList(
+            "\n", "\r", "\t"
+    ));
+    private final Set<String> accessSpecifiers = new HashSet<>(Arrays.asList("+", "-", "#"));
+
+    public List<Token> tokens = new ArrayList<>();
 
     // Categorize tokens based on value
-    private static TokenType categorizeToken(String token) {
+    public TokenType categorizeToken(String token) {
         if (dataTypes.contains(token)) {
             return TokenType.DataType;
+        }
+        if (accessSpecifiers.contains(token)) {
+            return TokenType.AccessSpecifier;
+        }
+        if (token.equals("+"))
+        {
+
+            if (tokens.isEmpty())
+            {
+
+                return TokenType.AccessSpecifier;
+
+            }
+            else if (tokens.get(tokens.size()-1).value.equals("\n") || tokens.get(tokens.size()-1).type == TokenType.Whitespace)
+            {
+
+                return TokenType.AccessSpecifier;
+
+            }
+            else
+            {
+
+                return TokenType.Operator;
+
+            }
+
         }
         if (reservedWords.contains(token)) {
             return TokenType.ReservedWord;
@@ -80,47 +79,132 @@ public class JavaPlusPlusTokenizer {
             return TokenType.Variable;
         }
         if (token.charAt(0) == '\"'){
-            return  TokenType.StringLiteral;
+            return TokenType.StringLiteral;
+        }
+        if (token.charAt(0) == ' ')
+        {
+            return TokenType.Whitespace;
+        }
+        if (escapeSequences.contains(token))
+        {
+            return TokenType.EscapeSequence;
         }
         return TokenType.Unknown;
     }
 
     // Tokenize the input string into tokens
-    private static List<Token> tokenize(String input) {
-        List<Token> tokens = new ArrayList<>();
+    public List<Token> tokenize(String input) {
         StringBuilder currentToken = new StringBuilder();
-        boolean stringflag = false;
+        boolean stringFlag = false;
 
         for (char ch : input.toCharArray()) {
             //exception must be made when " appears in code. It will create a string literal
 
-            if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringflag)) {
+            if (punctuation.contains(currentToken.toString()))
+            {
+                tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                currentToken.setLength(0);
+            }
+            if (((Character.isWhitespace(ch) || punctuation.contains(String.valueOf(ch))) && !stringFlag))
+            {
 
                 // Many times punctuation will be found touching char, this will
                 // record punctuation while the token is being scanned
-                tokens.add(new Token(String.valueOf(ch), categorizeToken(String.valueOf(ch))));
 
-                if (!currentToken.isEmpty()) {
+                // new line checker
+                if (ch == '\n')
+                {
+                    if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
+                    {
+                        tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                        currentToken.setLength(0);
+
+                    }
+                    else if (currentToken.toString().equals("\r"))
+                    {
+
+                        tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                        currentToken.setLength(0);
+
+                    }
+
+                    currentToken.append(ch);
+                    tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                    currentToken.setLength(0);
+
+
+                }
+                else if (ch == '\r')
+                {
+
+                    currentToken.append(ch);
+
+                }
+                else if (!currentToken.isEmpty() && !Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)) && !punctuation.contains(String.valueOf(ch)))
+                {
+                    tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                    currentToken.setLength(0);
+                    currentToken.append(' ');
+                }
+                else if (punctuation.contains(String.valueOf(ch)))
+                {
+                    if (!currentToken.isEmpty())
+                    {
+                        tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                        currentToken.setLength(0);
+                        currentToken.append(ch);
+                    }
+                    else
+                        currentToken.append(ch);
+
+
+                }
+
+                else if (!currentToken.isEmpty() && Character.isWhitespace(currentToken.charAt(currentToken.length() - 1)))
+                {
+                    currentToken.append(' ');
+                }
+                else if (currentToken.isEmpty() && Character.isWhitespace(ch))
+                {
+
+                    currentToken.append(ch);
+
+                }
+
+                else if (!currentToken.isEmpty()) {
                     tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
                     currentToken.setLength(0);
                 }
                 continue;
             }
 
+            if (currentToken.length() > 1 && !Character.isWhitespace(ch) && Character.isWhitespace(currentToken.charAt(currentToken.length()-1))  && !stringFlag)
+            {
+
+                tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                currentToken.setLength(0);
+
+            }
+
             // crude way of doing this but ill explain
-            if(ch == '\"' && !stringflag) {  // a flag is used to see if we are in a "string"
+            if(ch == '\"' && !stringFlag) {  // a flag is used to see if we are in a "string"
                 currentToken.append(ch);
-                stringflag = true;           // once we enter a "string" we set the flag to true
+                stringFlag = true;           // once we enter a "string" we set the flag to true
 
             }else if(ch == '\"') {           // finding another quotation means we exit the "string"
                 currentToken.append(ch);
-                stringflag = false;
+                stringFlag = false;
 
-            }else if(stringflag) {          // we keep appending all chars while the flag is true
+            }else if(stringFlag) {          // we keep appending all chars while the flag is true
                 currentToken.append(ch);
 
             } else if ((Character.isLetterOrDigit(ch) || operators.contains(String.valueOf(ch)))) {
-                currentToken.append(ch);
+                if (!currentToken.isEmpty() && Character.isWhitespace(currentToken.charAt(currentToken.length()-1)))
+                {
+                    tokens.add(new Token(currentToken.toString(), categorizeToken(currentToken.toString())));
+                    currentToken.setLength(0);
+                }
+                    currentToken.append(ch);
 
             } else {
                 if (!currentToken.isEmpty()) {
@@ -136,7 +220,7 @@ public class JavaPlusPlusTokenizer {
     }
 
     // Function to print categorized tokens
-    private static void printReport(List<Token> tokens, int lineCount) {
+    public void printReport(List<Token> tokens) {
         Map<TokenType, List<String>> categorizedTokens = new HashMap<>();
 
         for (Token token : tokens) {
@@ -144,6 +228,7 @@ public class JavaPlusPlusTokenizer {
         }
 
         System.out.println("NumericLiterals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.NumericLiteral, Collections.emptyList())));
+        System.out.println("Access Specifiers: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.AccessSpecifier, Collections.emptyList())));
         System.out.println("StringLiterals: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.StringLiteral, Collections.emptyList())));
         System.out.println("Operators: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Operator, Collections.emptyList())));
         System.out.println("Variables: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Variable, Collections.emptyList())));
@@ -151,43 +236,30 @@ public class JavaPlusPlusTokenizer {
         System.out.println("Reserved Words: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.ReservedWord, Collections.emptyList())));
         System.out.println("Data Types: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.DataType, Collections.emptyList())));
         System.out.println("Unknown: " + String.join(" ", categorizedTokens.getOrDefault(TokenType.Unknown, Collections.emptyList())));
-
-        System.out.println("Line Count (excluding comments): " + lineCount);
-
     }
 
-    public static void main(String[] args){
 
-        File inputFile = new File("src\\ExampleCode\\MangoCode.txt");
+    public String readFile(String filePath) {
+        File inputFile = new File(filePath);
+//        StringBuilder input = new StringBuilder();
+        String input = "";
 
-        if (!inputFile.exists()) {
-            System.err.println("Error: Could not open the file!");
-            return;
-        }
+        try {
 
-        StringBuilder input = new StringBuilder();
-        int lineCount = 0;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String trimmedLine = line.trim();
-                if (trimmedLine.startsWith("//") || trimmedLine.isEmpty()) {
-                    continue;
-                }
-                input.append(line).append(" ");
-                lineCount++;
-            }
+            input = Files.readString(Path.of(filePath));
+//            String line;
+//
+//            while ((line = reader.readLine()) != null) {
+//                String trimmedLine = line.replaceAll("1", "1");
+//                if (trimmedLine.startsWith("//") || trimmedLine.isEmpty()) {
+//                    continue;
+//                }
+//                input.append(line).append("\n");
+//            }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
-            return;
+            return input;
         }
-
-        // Tokenize input
-        List<Token> tokens = tokenize(input.toString());
-
-        // Print categorized tokens
-        printReport(tokens, lineCount);
+        return input;
     }
 }
